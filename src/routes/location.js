@@ -25,10 +25,35 @@ route.post('/', upload.single('image'), async (req, res) => {
 });
 
 //Read locations
+//GET /tasks?limit=10&skip=10
 route.get('/', async (req, res) => {
   try {
-    const allLocations = await Location.find({});
-    res.json({ pollutedLocations: allLocations });
+    const locations = await Location.find({});
+
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    const results = {};
+
+    if (endIndex < locations.length) {
+      results.next = {
+        page: page + 1,
+        limit: limit,
+      };
+    }
+    if (startIndex > 0) {
+      results.previous = {
+        page: page - 1,
+        limit: limit,
+      };
+    }
+
+    results.locations = locations.slice(startIndex, endIndex);
+
+    res.json({ pollutedLocations: results });
   } catch (e) {
     res.status(500).json({ message: 'Unable to send back locations' });
   }
