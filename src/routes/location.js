@@ -16,9 +16,10 @@ route.post('/', upload.single('image'), async (req, res) => {
   });
   try {
     const saveLocation = await location.save();
-    res
-      .status(201)
-      .json({ message: 'Location created successfully!', result: location });
+    res.status(201).json({
+      message: 'Location created successfully!',
+      result: saveLocation,
+    });
   } catch (e) {
     res.status(500).json({ message: e });
   }
@@ -58,10 +59,11 @@ route.patch('/update-info/:id', upload.none(), async (req, res) => {
     if (!location) {
       return res.status(404).json({ message: 'Location not found.' });
     }
-    res.json({
-      message: 'Location info updated successfully!',
-      result: location,
-    });
+    res.json(location);
+    // res.json({
+    //   message: 'Location info updated successfully!',
+    //   result: location,
+    // });
   } catch (e) {
     res.status(400).json({ message: e });
   }
