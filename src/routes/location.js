@@ -2,7 +2,6 @@ const express = require('express');
 const Location = require('../models/location');
 const upload = require('../utils/multer');
 const route = new express.Router();
-const _ = require('lodash');
 
 //Create location
 route.post('/', upload.single('image'), async (req, res) => {
