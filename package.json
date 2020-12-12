@@ -11,8 +11,8 @@
   "author": "Cezary",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "lodash": "^4.17.20",
     "mongoose": "^5.11.7",
     "multer": "^1.4.2"
   },
